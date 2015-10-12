@@ -1,0 +1,31 @@
+{
+  "name": "payload",
+  "main": "dist/payload.min.js",
+  "version": "1.0.0",
+  "homepage": "https://github.com/mgrahamjo/payload",
+  "authors": [
+    "Mike <mgrahamjo@gmail.com>"
+  ],
+  "description": "A simpler, smaller module loader for the browser.",
+  "moduleType": [
+    "globals"
+  ],
+  "keywords": [
+    "module",
+    "loader",
+    "dependency",
+    "manager",
+    "injection"
+  ],
+  "license": "ISC",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "test",
+    "index.js",
+    "index.html",
+    ".npmignore",
+    "package.json",
+    "karma.conf.js"
+  ]
+}
