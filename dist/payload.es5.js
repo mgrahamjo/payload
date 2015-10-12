@@ -4,6 +4,63 @@
 * https://github.com/mgrahamjo/payload
 */
 
+// Shim for array.forEach
+if (!Array.prototype.forEach) {
+	Array.prototype.forEach = function (action, that) {
+		for (var i = 0, n = this.length; i < n; i++) {
+			if (this[i]) {
+				action.call(that, this[i], i, this);
+			}
+		}
+	};
+}
+
+// Shim for array.indexOf
+if (!Array.prototype.indexOf) {
+	Array.prototype.indexOf = function (find) {
+		for (var i = 0; i < this.length; i++) {
+			if (this[i] === find) {
+				return i;
+			}
+		}
+		return -1;
+	};
+}
+
+// Shim for array.map
+if (!Array.prototype.map) {
+	Array.prototype.map = function (mapper, that) {
+		var other = new Array(this.length);
+		for (var i = 0, n = this.length; i < n; i++) {
+			if (i in this) {
+				other[i] = mapper.call(that, this[i], i, this);
+			}
+		}
+		return other;
+	};
+}
+
+// Shim for array.filter
+if (!Array.prototype.filter) {
+	Array.prototype.filter = function (filter, that) {
+		var other = [],
+		    v;
+		for (var i = 0, n = this.length; i < n; i++) {
+			if (this[i] && filter.call(that, v = this[i], i, this)) {
+				other.push(v);
+			}
+		}
+		return other;
+	};
+}
+
+// Shim for string.trim
+if (!String.prototype.trim) {
+	String.prototype.trim = function () {
+		return this.replace(/^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g, '');
+	};
+}
+
 (function () {
 
 	'use strict';
@@ -11,11 +68,6 @@
 	var loadedDependencyList = [],
 	    loadedDependencies = {},
 	    modules = [];
-
-	// Shim for string trim
-	function trim(str) {
-		return str.replace(/^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g, '');
-	}
 
 	/**
  * Filter a module's dependency list to those which haven't yet loaded.
@@ -93,7 +145,7 @@
 		match = match[1] || match[2];
 
 		dependencies = match ? match.split(',').map(function (dependency) {
-			return trim(dependency);
+			return dependency.trim();
 		}) : [];
 
 		return dependencies;

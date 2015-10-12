@@ -1,4 +1,6 @@
 node_modules
-coverage
+test/coverage
 index.js
 index.html
+.DS_Store
+.git

@@ -2,11 +2,11 @@
 
 A simpler, smaller module loader for the browser. 
 
-Don't worry about the order in which your JavaScript files are included. Just declare which dependencies each module needs, and payload will initialize that module as soon as all of its dependencies are loaded.
+Don't worry about the order in which your JavaScript files are included. Just declare which dependencies each module needs, and Payload will initialize that module as soon as all of its dependencies are loaded.
 
 ### Yet another module loader??
 
-Yeah, I know. CommonJS, Require, SystemJS, and a million others have all solved this problem. And I'm stoked that ES6 brings native support for modules, but we can't just wait around until browsers catch up. Look, I'm not saying you need to use payload. I'm just saying that, to me, the popular solutions feel like using a sledgehammer to stick a thumb tack in the wall. Meanwhile, Payload is 1kb and has two simple methods.
+Yeah, I know. CommonJS, Require, SystemJS, and a million others have all solved this problem. Look, I'm not saying you need to use Payload. I'm just saying that sometimes the popular solutions feel like using a sledgehammer to stick a thumb tack in the wall. Payload is less than 2kb (and a third of that is shims for IE<9) and it just has two simple methods.
 
 ### Declare a module's dependencies
 
@@ -19,7 +19,7 @@ payload(['foo', 'bar'], (foo, bar) => {
 });
 ```
 
-Sweet! Now this module won't run until `foo` and `bar` are loaded. I borrowed a trick from Angular so you can accomplish the same thing without even passing the array of dependencies:
+Sweet! Now this module won't run until `foo` and `bar` are loaded. Plus, I borrowed a trick from Angular so you can accomplish the same thing without even passing the array of dependencies:
 
 ```
 payload((foo, bar) => {
@@ -29,11 +29,11 @@ payload((foo, bar) => {
 });
 ```
 
-But watch out! This syntax isn't minification-safe unless you account for it in a build step. I haven't yet published a plugin for that.
+But watch out! Like other non-annotated AMD implementations, this shorthand syntax isn't minification-safe unless you account for it in a build step. I haven't yet published a plugin for that.
 
 ### Export modules
 
-In the example above, nothing will happen until `foo` and `bar` are defined like this:
+In the example above, nothing will happen until `foo` and `bar` are defined using `payload.define()`:
 
 ```
 payload.define('foo', {
@@ -45,7 +45,7 @@ payload.define('bar', () => {
 });
 ```
 
-Often, a module will have dependencies and export stuff too:
+A module can have dependencies and be a dependency too:
 
 ```
 payload(['foo', 'bar'], (foo, bar) => {
@@ -62,4 +62,22 @@ payload(['foo', 'bar'], (foo, bar) => {
 
 ### Working with globals
 
-Payload will automatically check the `window` object for any required dependencies, so you don't need to write a wrapper to define jQuery, for example.
+Obviously we want to avoid using globals, because that's the opposite of modularity, and it causes the load-order issues that we're trying to put behind us. But people will want to use jQuery and lodash and all, and I don't want to have to publish Payload-specific versions of every plugin that exports a global. 
+
+So, if a dependency name already exists on the `window` object, Payload will use that without waiting for a module by that name to be defined:
+
+```
+<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+<script src="/node_modules/payload/dist/payload.min.js"></script>
+<script>
+	payload(function($) {
+		if ($('script').length === 3) {
+			console.log('This module runs using window.$ even though we never called payload.define("$")');
+		}
+	});
+</script>
+```
+
+### Browser support
+
+Payload works in Chrome, Safari, Firefox, and IE 7+. Probably Opera too but I haven't checked.
