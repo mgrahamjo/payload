@@ -1,0 +1,36 @@
+{
+  "name": "payload",
+  "version": "1.0.0",
+  "description": "A simpler, smaller module loader for the browser.",
+  "main": "payload.js",
+  "scripts": {
+    "test": "karma start test/karma.conf.js --single-run",
+    "compile": "babel src/payload.js --out-file dist/payload.es5.js --blacklist strict",
+    "minify": "uglifyjs dist/payload.es5.js -o dist/payload.min.js --compress --mangle",
+    "build": "npm run-script compile && npm run-script minify"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mgrahamjo/payload.git"
+  },
+  "keywords": [
+    "module",
+    "loader",
+    "dependency",
+    "manager",
+    "injection"
+  ],
+  "author": "Mike Johnson",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mgrahamjo/payload/issues"
+  },
+  "homepage": "https://github.com/mgrahamjo/payload#readme",
+  "devDependencies": {
+    "jasmine-core": "^2.3.4",
+    "karma": "^0.13.10",
+    "karma-chrome-launcher": "^0.2.1",
+    "karma-coverage": "^0.5.2",
+    "karma-jasmine": "^0.3.6"
+  }
+}
