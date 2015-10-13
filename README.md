@@ -8,6 +8,24 @@ Don't worry about the order in which your JavaScript files are included. Just de
 
 Yeah, I know. CommonJS, Require, SystemJS, and a million others have all solved this problem. Look, I'm not saying you need to use Payload. I'm just saying that sometimes the popular solutions feel like using a sledgehammer to stick a thumb tack in the wall. Payload is less than 2kb (and a third of that is shims for IE<9) and it just has two simple methods.
 
+### Installation
+
+```
+bower install payload
+```
+
+or:
+
+```
+npm install payload --save
+```
+
+Then include it in your HTML before your modules:
+```
+<script src="/bower_components/payload/dist/payload.min.js"></script>
+<script src="/my-module.js"></script>
+```
+
 ### Declare a module's dependencies
 
 
