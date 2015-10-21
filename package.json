@@ -1,6 +1,6 @@
 {
   "name": "payload",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A simpler, smaller module loader for the browser.",
   "main": "dist/payload.min.js",
   "scripts": {

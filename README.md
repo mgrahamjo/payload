@@ -6,7 +6,7 @@ Don't worry about the order in which your JavaScript files are included. Just de
 
 ### Yet another module loader??
 
-Yeah, I know. CommonJS, Require, SystemJS, and a million others have all solved this problem. Look, I'm not saying you need to use Payload. I'm just saying that sometimes the popular solutions feel like using a sledgehammer to stick a thumb tack in the wall. Payload is less than 2kb (and a third of that is shims for IE<9) and it just has two simple methods.
+Yeah, I know. CommonJS, Require, SystemJS, and a million others have all solved this problem. Look, I'm not saying you need to use Payload. I'm just saying that sometimes the popular solutions feel like using a sledgehammer to stick a thumb tack in the wall. Payload is less than 2kb (and a third of that is shims for IE<9) and it just has two simple methods. 
 
 ### Installation
 
@@ -47,7 +47,7 @@ payload((foo, bar) => {
 });
 ```
 
-But watch out! Like other non-annotated AMD implementations, this shorthand syntax isn't minification-safe unless you account for it in a build step. I haven't yet published a plugin for that.
+But watch out! Like other non-annotated AMD implementations, this shorthand syntax isn't minification-safe unless you account for it in a build step (see [grunt-payload](https://github.com/mgrahamjo/grunt-payload));
 
 ### Export modules
 
